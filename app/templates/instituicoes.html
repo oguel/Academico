@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Instituições</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.
+min.css">
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-success">
+        <a class="navbar-brand" href="/">Academico</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
+            aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle
+        navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav">
+                <li class="nav-item">
+                    <a class="nav-link text-dark" href="/">Home</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link text-dark" href="/cursos/">Cursos</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link text-dark" href="/instituicoes/">Instituições</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link text-dark" href="/turmas/">Turmas</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link text-dark" href="/alunos/">Alunos</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link text-dark" href="/professores/">Professores</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link text-dark" href="/avaliacoes/">Avaliações</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link text-dark" href="/frequencias/">Frequências</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link text-dark" href="/ocorrencias/">Ocorrências</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+    <div class="container mt-5">
+        <h1 class="text-center mb-4">Lista de Instituições</h1>
+        {% for instituicao in instituicoes %}
+        <div class="mb-4">
+            <table class="table table-bordered table-uniform">
+                <tbody> 
+                    <tr>
+                        <td>Nome</td>
+                        <td>{{ instituicao.nome }}</td>
+                    </tr>
+                    <tr>
+                        <td>Endereço</td>
+                        <td>{{ instituicao.cidade }}</td>
+                    </tr>
+                    <tr>
+                        <td>Telefone</td>
+                        <td>{{ instituicao.telefone }}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        {% endfor %}
+    </div>    
+</body>
+</html>

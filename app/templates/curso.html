@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="pt">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cursos</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.
+min.css">
+</head>
+
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-success">
+        <a class="navbar-brand" href="/">Academico</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
+            aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle
+        navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav">
+                <li class="nav-item">
+                    <a class="nav-link text-dark" href="/">Home</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link text-dark" href="/cursos/">Cursos</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link text-dark" href="/instituicoes/">Instituições</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link text-dark" href="/turmas/">Turmas</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link text-dark" href="/alunos/">Alunos</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link text-dark" href="/professores/">Professores</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link text-dark" href="/avaliacoes/">Avaliações</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link text-dark" href="/frequencias/">Frequências</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link text-dark" href="/ocorrencias/">Ocorrências</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+    <div class="container mt-5">
+        <h1 class="text-center mb-4">Cursos Disponíveis</h1>
+        <div class="row">
+            {% for curso in cursos %}
+            <div class="col-md-4">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">{{ curso.nome }}</h5>
+                        <p class="card-text">{{ curso.instituicao.nome|default:"Instituição não informada" }}</p>
+                        <button class="btn btn-success" data-toggle="modal" data-target="#courseModal"
+                            data-title="{{ curso.nome }}" data-duration="{{ curso.duracao_meses }}"
+                            data-instituicao="{{ curso.instituicao }}" data-area="{% for area in curso.area_saber.all %}{{ area.nome }}{% if not forloop.last %}, {% endif %}{% endfor %}" data-disciplinas="{% for disciplina in curso.disciplinas.all %}{{ disciplina.nome }}{% if not forloop.last %}, {% endif %}{% endfor %}">
+                            Ver Curso
+                        </button>
+                    </div>
+                </div>
+            </div>
+            {% empty %}
+            <p class="col-12">Nenhum curso disponível.</p>
+            {% endfor %}
+        </div>
+    </div>
+
+    <!-- Modal -->
+    <div class="modal fade" id="courseModal" tabindex="-1" role="dialog" aria-labelledby="courseModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="courseModalLabel">Detalhes do Curso</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Fechar">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <h5 id="modalCourseTitle"></h5>
+                    <p id="modalCourseDescription"></p>
+                    <p><strong>Instituição:</strong> <span id="modalCourseInstituicao"></span></p>
+                    <p><strong>Duração:</strong> <span id="modalCourseDuration"></span></p>
+                    <p><strong>Áreas:</strong> <span id="modalCourseArea"></span></p>
+                    <p><strong>Disciplinas:</strong> <span id="modalCourseDisciplina"></span></p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.1/dist/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script>
+        $('#courseModal').on('show.bs.modal', function (event) {
+            var button = $(event.relatedTarget); // Button that triggered the modal
+            var title = button.data('title'); // Extract info from data-* attributes
+            var duration = button.data('duration');
+            var instituicao = button.data('instituicao');
+            var area = button.data('area');
+            var disciplinas = button.data('disciplinas');
+
+            // Update the modal's content
+            var modal = $(this);
+            modal.find('#modalCourseTitle').text(title);
+            modal.find('#modalCourseDuration').text(duration + ' meses');
+            modal.find('#modalCourseInstituicao').text(instituicao);
+            modal.find('#modalCourseArea').text(area);
+            modal.find('#modalCourseDisciplina').text(disciplinas);
+        });
+    </script>
+
+</body>
+
+</html>
